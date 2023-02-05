@@ -3,7 +3,10 @@
 #   - localhost resolves to 127.0.0.2
 #   - facebook.com resolves to 8.8.8.8
 
-cp /etc/hosts new_hosts
-sed -i s/^127.*/"127.0.0.2 localhost"/ new_hosts
-echo "8.8.8.8 facebook.com" >> new_hosts
-cp new_hosts /etc/hosts
+# Create a new DNS resolver configuration file
+echo "nameserver 8.8.8.8" > /etc/resolv.conf
+echo "nameserver 127.0.0.2" >> /etc/resolv.conf
+
+# Add entries to the /etc/hosts file to resolve localhost and facebook.com
+echo "127.0.0.2 localhost" >> /etc/hosts
+echo "8.8.8.8 facebook.com" >> /etc/hosts
