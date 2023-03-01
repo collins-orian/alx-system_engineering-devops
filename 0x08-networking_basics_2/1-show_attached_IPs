@@ -1,16 +1,4 @@
 #!/usr/bin/env bash
 # Displays all acive IPv4 addresses.
 
-interfaces=$(ifconfig | grep -Eo '^[^ ]+:')
-
-# Loop through each interface and get its IPv4 address
-for interface in $interfaces; do
-  # Remove the colon from the end of the interface name
-  interface=${interface%:}
-  # Get the IPv4 address for the interface
-  ip=$(ifconfig "$interface" | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1')
-  # If the interface has an IPv4 address, display it
-  if [ ! -z "$ip" ]; then
-    echo "$interface: $ip"
-  fi
-done
+ifconfig | grep "inet " | awk '{print $2}'
