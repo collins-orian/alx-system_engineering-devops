@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 #to configure a new server
 
-sudo apt-get update
-sudo apt-get -y install nginx
-sudo service nginx start
-sudo sed -i "47i\\\tadd_header X-Served-By $HOSTNAME;" /etc/nginx/nginx.conf
+apt-get -y update
+apt-get -y install nginx
+
+sed -i "47i\\\tadd_header X-Served-By $HOSTNAME;" /etc/nginx/sites-available/default
 echo "Hello World!" | tee /var/www/html/index.html
 echo "Ceci n'est pas une page" > /var/www/html/404.html
-sudo service nginx start
+
+service nginx start
