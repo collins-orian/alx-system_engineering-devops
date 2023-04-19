@@ -4,6 +4,7 @@
 sudo apt-get update
 sudo apt-get -y install nginx
 sudo service nginx start
-sudo sed -i "13i\\\n\tserver {\n\t\t#server configuration\n\n\t\tadd_header X-Served-By $HOSTNAME;\n\t}\n\n" /etc/nginx/nginx.conf
-echo "Hello World!" | sudo tee /usr/share/nginx/html/index.html
-sudo service nginx restart
+sudo sed -i "47i\\\tadd_header X-Served-By $HOSTNAME;" /etc/nginx/nginx.conf
+echo "Hello World!" | tee /var/www/html/index.html
+echo "Ceci n'est pas une page" > /var/www/html/404.html
+sudo service nginx start
