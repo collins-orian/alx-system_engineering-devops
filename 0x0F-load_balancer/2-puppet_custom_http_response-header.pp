@@ -1,19 +1,26 @@
-#puppet advance
-exec { 'update':
-  command  => 'sudo apt-get update',
+#Insta
+
+
+exec {'update':
   provider => shell,
+  command  => 'sudo apt-get -y update',
+  before   => Exec['install Nginx'],
 }
--> package {'nginx':
-  ensure => present,
+
+exec {'install Nginx':
+  provider => shell,
+  command  => 'sudo apt-get -y install nginx',
+  before   => Exec['add_header'],
 }
--> file_line { 'header line':
-  ensure => present,
-  path   => '/etc/nginx/sites-available/default',
-  line   => "	location / }
-  add_header X-Served-By ${hostname};",
-  match  => '^\tlocation / {',
+
+exec { 'add_header':
+  provider    => shell,
+  environment => ["HOST=${hostname}"],
+  command     => 'sudo sed -i "s/include \/etc\/nginx\/sites-enabled\/\*;\n\tadd_header X-Served-By \"$HOST\";/" /etc/nginx/nginx.conf',
+  before      => Exec['restart Nginx'],
 }
--> exec { 'restart service':
+
+exec { 'restart Nginx':
+  provider => shell,
   command  => 'sudo service nginx restart',
-  provider => shell,
 }
