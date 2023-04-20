@@ -8,6 +8,13 @@
 #   ufw-before-forward
 #
 
+# Section added to allow port 80 to forward port 8080
+*nat
+:PREROUTING ACCEPT [0:0]
+-A PREROUTING -p tcp --dport 8080 -j REDIRECT --to-port 80
+COMMIT
+# End of added section
+
 # Don't delete these required lines, otherwise there will be errors
 *filter
 :ufw-before-input - [0:0]
@@ -17,12 +24,6 @@
 # End required lines
 
 
-# Section added to allow port 80 to forward port 8080
-*nat
-:PREROUTING ACCEPT [0:0]
--A PREROUTING -p tcp --dport 8080 -j REDIRECT --to-port 80
-COMMIT
-# End of added section
 
 # allow all on loopback
 -A ufw-before-input -i lo -j ACCEPT
