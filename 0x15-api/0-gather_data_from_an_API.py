@@ -9,36 +9,25 @@ import requests
 import sys
 
 
-"""REST API url"""
 API = "https://jsonplaceholder.typicode.com"
+"""REST API url"""
 
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
-
-        '''uses regular expressions to check if first command-line argument is an integer'''
         if re.fullmatch(r'\d+', sys.argv[1]):
             id = int(sys.argv[1])
-
-            '''requests users from the API'''
-            user_request = requests.get('{}/users/{}'.format(API, id)).json()
-
-            '''requests the todos from the API'''
-            todos_request = requests.get('{}/todos'.format(API)).json()
-
-            '''gets the username, tasks and tasks done from the information
-            gotten from the api'''
-            user_name = user_request.get('name')
-            todos = list(filter(lambda x: x.get('userId') == id, todos_request))
-            todos_completed = list(filter(lambda x: x.get('completed'), todos))
-            
-            '''prints final output'''
+            user_res = requests.get('{}/users/{}'.format(API, id)).json()
+            todos_res = requests.get('{}/todos'.format(API)).json()
+            user_name = user_res.get('name')
+            todos = list(filter(lambda x: x.get('userId') == id, todos_res))
+            todos_done = list(filter(lambda x: x.get('completed'), todos))
             print(
                 'Employee {} is done with tasks({}/{}):'.format(
                     user_name,
-                    len(todos_completed),
+                    len(todos_done),
                     len(todos)
                 )
             )
-            for todo_done in todos_completed:
+            for todo_done in todos_done:
                 print('\t {}'.format(todo_done.get('title')))
