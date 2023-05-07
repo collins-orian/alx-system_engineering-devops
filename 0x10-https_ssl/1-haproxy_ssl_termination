@@ -39,7 +39,7 @@ frontend iocservices.tech-http-frontend
         default_backend  nginx_webservers
 
 frontend  iocservices.tech-https-frontend
-        bind *:443 ssl crt /etc/letsencrypt/live/www.ruthmarcuss.tech.tech/fullchain.pem
+        bind *:443 ssl crt /etc/letsencrypt/live/www.iocservices.tech/fullchain.pem
         default_backend nginx_webservers
 
 
