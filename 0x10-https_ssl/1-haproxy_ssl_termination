@@ -33,16 +33,6 @@ global
         errorfile 503 /etc/haproxy/errors/503.http
         errorfile 504 /etc/haproxy/errors/504.http
 
-frontend iocservices.tech-http-frontend
-        bind     *:80
-        option forwardfor
-        default_backend  nginx_webservers
-
-frontend  iocservices.tech-https-frontend
-        bind *:443 ssl crt /etc/letsencrypt/live/www.iocservices.tech/fullchain.pem
-        default_backend nginx_webservers
-
-
 listen balancer
         bind :80
         balance roundrobin
