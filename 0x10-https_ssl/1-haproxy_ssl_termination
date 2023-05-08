@@ -41,6 +41,6 @@ frontend http-in
 
 backend servers
 	balance roundrobin
-	server 125958-web-01 54.160.113.254:80 check
+	server 125958-web-01 100.26.171.82:80 check
 	server 125958-web-02 18.204.10.93:80 check
 
