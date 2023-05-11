@@ -29,9 +29,9 @@ def recurse(subreddit, hot_list=[], after=None):
 
     reddit_url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
     response = requests.get(reddit_url,
-                       headers=headers,
-                       params=params,
-                       allow_redirects=False)
+                            headers=headers,
+                            params=params,
+                            allow_redirects=False)
 
     if response.status_code != 200:
         return None
